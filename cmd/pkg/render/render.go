@@ -8,7 +8,8 @@ import (
 )
 
 func Render_Template(w http.ResponseWriter, tmpl string) {
-	parsedTemplate, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl")
+	parsedTemplate, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl") // using .tmpl extension
+	// parsedTemplate, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.html")  // // using .html extension
 	if err != nil {
 		log.Fatalln(err)
 	}
