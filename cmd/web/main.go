@@ -27,6 +27,7 @@ func main() {
 package main
 
 import (
+	"fmt"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/config"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/handlers"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/render"
@@ -41,9 +42,17 @@ func main() {
 
 	if err != nil {
 		log.Println("can not create template cache")
-		app.TemplateCache = tc
+
 	}
+	app.TemplateCache = tc
+	app.UseCache = false
+
+	repo := handlers.NewRepo(&app)
+	handlers.NewHandler(repo)
+	render.NewTemplates(&app)
+
 	http.HandleFunc("/", handlers.Repo.Home)
 	http.HandleFunc("/about", handlers.Repo.About)
+	fmt.Println("starting the application on port : 8081")
 	http.ListenAndServe(":8081", nil)
 }
