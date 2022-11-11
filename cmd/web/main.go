@@ -27,8 +27,6 @@ func main() {
 package main
 
 import (
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/config"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/handlers"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/render"
@@ -45,10 +43,7 @@ func main() {
 		log.Println("can not create template cache")
 		app.TemplateCache = tc
 	}
-
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Get("/", handlers.Repo.Home)
-	r.Get("/about", handlers.Repo.About)
-	http.ListenAndServe(":8080", r)
+	http.HandleFunc("/", handlers.Repo.Home)
+	http.HandleFunc("/about", handlers.Repo.About)
+	http.ListenAndServe(":8081", nil)
 }
