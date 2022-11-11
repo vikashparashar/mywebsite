@@ -48,7 +48,7 @@ func main() {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Get("/", handlers.Home)
-	r.Get("/about", handlers.About)
+	r.Get("/", handlers.Repo.Home)
+	r.Get("/about", handlers.Repo.About)
 	http.ListenAndServe(":8080", r)
 }

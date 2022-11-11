@@ -6,25 +6,36 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/vikashparashar/mywebsite/cmd/pkg/config"
+	"github.com/vikashparashar/mywebsite/cmd/pkg/models"
 )
 
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
+var functions = template.FuncMap{}
+var app *config.AppConfig
 
-	//get the template cache from the app config
-	
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+	var tc map[string]*template.Template
+	if app.UseCache {
+		//get the template cache from the app config
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreatingTemplateCache()
+	}
 
 	// creating my template cache
-	tc, err := CreatingTemplateCache()
-	if err != nil {
-		log.Fatalln(err)
-	}
+
 	// finding template from cacahe
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Println(err)
+		log.Println("template not found in cache")
 	}
 	buf := new(bytes.Buffer)
-	err = t.Execute(buf, nil)
+	err := t.Execute(buf, td)
 	if err != nil {
 		log.Println(err)
 	}
