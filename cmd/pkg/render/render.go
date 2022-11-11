@@ -9,8 +9,12 @@ import (
 )
 
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
+
+	//get the template cache from the app config
+	
+
 	// creating my template cache
-	tc, err := creatingTemplateCache()
+	tc, err := CreatingTemplateCache()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -32,7 +36,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 	}
 }
 
-func creatingTemplateCache() (map[string]*template.Template, error) {
+func CreatingTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 
 	// get all the files named *.page.tmpl from ./templates

@@ -29,11 +29,23 @@ package main
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/vikashparashar/mywebsite/cmd/pkg/config"
 	"github.com/vikashparashar/mywebsite/cmd/pkg/handlers"
+	"github.com/vikashparashar/mywebsite/cmd/pkg/render"
+	"log"
 	"net/http"
 )
 
 func main() {
+	var app config.AppConfig
+
+	tc, err := render.CreatingTemplateCache()
+
+	if err != nil {
+		log.Println("can not create template cache")
+		app.TemplateCache = tc
+	}
+
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", handlers.Home)
