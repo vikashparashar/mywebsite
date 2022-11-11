@@ -49,7 +49,7 @@ func Render_Template(w http.ResponseWriter, t string) {
 
 		// need to create the template
 		if err = createTemplateCache(t); err != nil {
-			return
+			log.Println(err)
 		}
 	} else {
 
@@ -66,6 +66,9 @@ func Render_Template(w http.ResponseWriter, t string) {
 
 	tmpl = tc[t]
 	err = tmpl.Execute(w, nil)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func createTemplateCache(t string) error {
@@ -75,7 +78,8 @@ func createTemplateCache(t string) error {
 	}
 	parsedTemplate, err := template.ParseFiles(templates...)
 	if err != nil {
-		log.Println("failed to parse template files")
+		// log.Println("failed to parse template files")
+		return err
 	}
 	tc[t] = parsedTemplate
 	return nil
