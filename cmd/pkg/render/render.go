@@ -24,9 +24,10 @@ var tc = make(map[string]*template.Template)
 
 }
 */
-func Render_Template_Test(w http.ResponseWriter, tmpl string) {
-	_, ok := tc[tmpl]
-	if !ok {
+func Render_Template(w http.ResponseWriter, tmpl string) {
+	_, available := tc[tmpl]
+	if !available {
+		fmt.Println("temp not available but we are now creating a new template to use")
 		parsedTemplate, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl") // using .tmpl extension
 		// parsedTemplate, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.html")  // // using .html extension
 		if err != nil {
@@ -35,10 +36,15 @@ func Render_Template_Test(w http.ResponseWriter, tmpl string) {
 		err = parsedTemplate.Execute(w, nil)
 		if err != nil {
 			fmt.Println("error while parsing template : ", err)
-			fmt.Fprintln(w, fmt.Sprintf("error while parsing template : %s\n", err))
+			// fmt.Fprintln(w, fmt.Sprintf("error while parsing template : %s\n", err))
 		}
 		tc[tmpl] = parsedTemplate
 	} else {
-		fmt.Println("using cache template")
+		fmt.Println("using a cache template")
+		err := tc[tmpl].Execute(w, nil)
+		if err != nil {
+			fmt.Println("error while parsing template : ", err)
+			// fmt.Fprintln(w, fmt.Sprintf("error while parsing template : %s\n", err))
+		}
 	}
 }
