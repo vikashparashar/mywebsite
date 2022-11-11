@@ -53,6 +53,11 @@ func main() {
 
 	http.HandleFunc("/", handlers.Repo.Home)
 	http.HandleFunc("/about", handlers.Repo.About)
-	fmt.Println("starting the application on port : 8081")
+	fmt.Println("  >>------>  Starting The Application  <------<<  ")
+	fmt.Println("_____________      Port : 8081      ______________")
+	fmt.Println("_____________    Host : LocalHost   ______________")
+	fmt.Println("____________        Path : /         _____________")
+	fmt.Println("___________      Path : /about       ____________")
+
 	http.ListenAndServe(":8081", nil)
 }
