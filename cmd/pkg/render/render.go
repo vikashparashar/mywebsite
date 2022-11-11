@@ -1,4 +1,4 @@
-package rander
+package render
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func Rander_Template(w http.ResponseWriter, tmpl string) {
+func Render_Template(w http.ResponseWriter, tmpl string) {
 	parsedTemplate, err := template.ParseFiles("./templates/" + tmpl)
 	if err != nil {
 		log.Fatalln(err)
