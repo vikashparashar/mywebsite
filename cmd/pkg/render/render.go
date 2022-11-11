@@ -31,6 +31,7 @@ func Render_Template(w http.ResponseWriter, t string) {
 	//  check to see if we already have the template in our cache
 	_, inMap := tc[t]
 	if !inMap {
+		fmt.Println("creating the template and adding that into cache for future usees .")
 		/*
 			fmt.Println("temp not available but we are now creating a new template to use")
 			parsedTemplate, err := template.ParseFiles("./templates/"+t, "./templates/base.layout.tmpl") // using .tmpl extension
